@@ -1,9 +1,9 @@
 ---
-title: "Retrying Encrypted TLS Client Hello with Self-Identifying Key Domains"
-abbrev: "RETCH Domains"
+title: "Public Name Masquerade for TLS Encrypted Client Hello"
+abbrev: "Public Name Masquerade"
 category: std
 
-docname: draft-thomson-tls-retch-sik-latest
+docname: draft-thomson-tls-ech-pnmasq-latest
 submissiontype: IETF
 number:
 date:
