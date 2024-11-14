@@ -19,12 +19,12 @@
 # Change the file extension to match the format (.xml for XML, etc...)
 #
 ###
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
-category: info
+title: "Retrying Encrypted TLS Client Hello with Self-Identifying Key Domains"
+abbrev: "RETCH Domains"
+category: std
 
-docname: draft-todo-yourname-protocol-latest
-submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
+docname: draft-thomson-tls-retch-sik-latest
+submissiontype: IETF
 number:
 date:
 consensus: true
@@ -46,7 +46,7 @@ venue:
 author:
  -
     fullname: Your Name Here
-    organization: Your Organization Here
+    organization: Mozilla
     email: your.email@example.com
 
 normative:
