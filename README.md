@@ -1,17 +1,17 @@
-# Retrying Encrypted TLS Client Hello with Self-Identifying Key Domains
+# Public Name Masquerade for TLS Encrypted Client Hello
 
-This is the working area for the individual Internet-Draft, "Retrying Encrypted TLS Client Hello with Self-Identifying Key Domains".
+This is the working area for the individual Internet-Draft, "Public Name Masquerade for TLS Encrypted Client Hello".
 
-* [Editor's Copy](https://martinthomson.github.io/retch-sik/#go.draft-thomson-tls-retch-sik.html)
-* [Datatracker Page](https://datatracker.ietf.org/doc/draft-thomson-tls-retch-sik)
-* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-thomson-tls-retch-sik)
-* [Compare Editor's Copy to Individual Draft](https://martinthomson.github.io/retch-sik/#go.draft-thomson-tls-retch-sik.diff)
+* [Editor's Copy](https://martinthomson.github.io/ech-pnmasq/#go.draft-thomson-tls-ech-pnmasq.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-thomson-tls-ech-pnmasq)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-thomson-tls-ech-pnmasq)
+* [Compare Editor's Copy to Individual Draft](https://martinthomson.github.io/ech-pnmasq/#go.draft-thomson-tls-ech-pnmasq.diff)
 
 
 ## Contributing
 
 See the
-[guidelines for contributions](https://github.com/martinthomson/retch-sik/blob/main/CONTRIBUTING.md).
+[guidelines for contributions](https://github.com/martinthomson/ech-pnmasq/blob/main/CONTRIBUTING.md).
 
 Contributions can be made by creating pull requests.
 The GitHub interface supports creating pull requests using the Edit (✏) button.
