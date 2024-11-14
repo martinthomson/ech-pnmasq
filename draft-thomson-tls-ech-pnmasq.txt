@@ -8,8 +8,8 @@ Intended status: Standards Track                        14 November 2024
 Expires: 18 May 2025
 
 
- Retrying Encrypted TLS Client Hello with Self-Identifying Key Domains
-                   draft-thomson-tls-retch-sik-latest
+         Public Name Masquerade for TLS Encrypted Client Hello
+                  draft-thomson-tls-ech-pnmasq-latest
 
 Abstract
 
@@ -22,7 +22,7 @@ About This Document
    The latest revision of this draft can be found at
    https://martinthomson.github.io/retch-sik/draft-thomson-tls-retch-
    sik.html.  Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-thomson-tls-retch-sik/.
+   https://datatracker.ietf.org/doc/draft-thomson-tls-ech-pnmasq/.
 
    Discussion of this document takes place on the Transport Layer
    Security Working Group mailing list (mailto:tls@ietf.org), which is
