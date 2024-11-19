@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-17T01:48:02.326978+00:00",
+  "timestamp": "2024-11-19T01:43:54.690542+00:00",
   "repo": "martinthomson/ech-pnmasq",
   "labels": [
     {
@@ -49,6 +49,55 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDONPOULc6fFqsW",
+      "title": "GREASE?",
+      "url": "https://github.com/martinthomson/ech-pnmasq/issues/1",
+      "state": "OPEN",
+      "author": "ghedo",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "It seems like it would be easier for a MITM to distinguish a GREASEd ECH connection if a client normally uses `public_name_authn` for \"real\" ECH connections, but not GREASEd ones. Is this a problem? And if so, should a client also GREASE `public_name_authn` (maybe only _some_ of the time) if already greasing ECH? Like sending a random `spki_hash` value or something.\r\n\r\nIn that case, I _think_ a server should then be allowed to fallback to normal outer SNI processing if it doesn't recognize the `spki_hash`, which seems to not be allowed by Section 5 right now, if I'm reading this correctly:\r\n\r\n> This procedure largely replaces the procedure in Section 6.1.7 of ECH.",
+      "createdAt": "2024-11-18T16:03:05Z",
+      "updatedAt": "2024-11-18T21:50:21Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "GREASE for ECH sets the value of the \"server_name\" to the real server name.  Where an operator has a limited number of public names -- the ideal for ECH without something like this solution -- a public name is easily distinguishable from the real name.\r\n\r\nNote that the intent is to \"encode\" the relatively small amount of entropy necessary to identify the configuration into a domain name.  That could be \"cloudflare-ech-`$entropy`.com\" in its the most basic form. Of course, with limited entropy, you could also draw from [a list of other names](https://en.wikipedia.org/wiki/List_of_most-visited_websites).  You might even imagine several operators coordinating on their use of names.  In that case, the name might not match the IP, but the connection attempt might be less distinguishable as ECH.\r\n\r\nEither way, I don't see much hope for GREASE ECH being indistinguishable from non-GREASE.  That was never really the goal of GREASE.  We only ever did that to get middleboxes accustomed to seeing the extension.",
+          "createdAt": "2024-11-18T21:50:20Z",
+          "updatedAt": "2024-11-18T21:50:20Z"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "I_kwDONPOULc6fF90T",
+      "title": "\"Stateless\" public name",
+      "url": "https://github.com/martinthomson/ech-pnmasq/issues/2",
+      "state": "OPEN",
+      "author": "ghedo",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 1.1 says:\r\n> In the ideal form of this approach, a unique public name is used for each client.\r\n\r\nI think this would be impactical for large deployments (particularly considering these names and corresponding keys would need to be shared and synced between DNS and TLS stacks).\r\n\r\nNow, this might be going too far, but in theory I imagine a DNS responder could generate a \"single-use\" (leaving DNS caching aside) RPK based on a random nonce and a secret pre-shared with whatever TLS terminating service. The random nonce could then be returned as part of the DNS response along with `spki_hash` of the RPK, and then reflected by the client to the TLS server, which could then generate the same key based on the same nonce and pre-shared secret.\r\n\r\nThis could require less state to be shared between DNS and TLS and allow for much more frequent public name rotation.\r\n\r\nThough it could potentially be a separate extension to be used along with `public_name_authn`.",
+      "createdAt": "2024-11-18T16:37:24Z",
+      "updatedAt": "2024-11-18T21:59:01Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "You hit a work in progress.  That's more or less exactly the design that I have in mind here.  Except that the public name is the nonce.  I have most of that design written down now, but it turns out to be fairly tricky to get right.\r\n\r\nThe challenge is in ensuring that a public name doesn't point straight at a single hidden name.  A \"single-use\" name can have that effect if your adversary is able to get the name, which is something that DNS caches tend to ensure will happen.  A true single use name wouldn't have this problem, but that would require the cooperation of recursive resolvers[^1].\r\n\r\n[^1]: There's an potential opportunity for a DNS extension here, maybe.  I predict that it would encounter some resistance from the community as it depends on disabling all of the benefits of caching.  Caching is pretty important to DNS, so disabling it would be a big decision.",
+          "createdAt": "2024-11-18T21:59:00Z",
+          "updatedAt": "2024-11-18T21:59:00Z"
+        }
+      ]
+    }
+  ],
   "pulls": []
 }
