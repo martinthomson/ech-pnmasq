@@ -20,8 +20,8 @@ venue:
   type: "Working Group"
   mail: "tls@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/tls/"
-  github: "martinthomson/retch-sik"
-  latest: "https://martinthomson.github.io/retch-sik/draft-thomson-tls-retch-sik.html"
+  github: "martinthomson/ech-pnmasq"
+  latest: "https://martinthomson.github.io/ech-pnmasq/draft-thomson-tls-ech-pnmasq.html"
 
 author:
  -
