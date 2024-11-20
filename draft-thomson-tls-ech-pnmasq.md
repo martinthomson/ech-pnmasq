@@ -618,6 +618,15 @@ that the collision risk is negligible.
 The only relevant consideration is
 the length of the resulting public name.
 
+If a different scheme is used
+for generating public names
+based on how the ECH configurations are delivered,
+it is necessary to distinguish between the forms.
+This could use the unprotected key identifier
+or just the length of the name
+(using a larger value of `DIVERSITY_BITS`
+likely results in a longer name).
+
 
 ## Sample Authentication Key Generation Method {#sample-authn-key}
 
