@@ -7,7 +7,11 @@
 <title>Public Name Masquerade for TLS Encrypted Client Hello</title>
 <meta content="Martin Thomson" name="author">
 <meta content="
-       TODO Abstract 
+       An alternative method
+for authenticating Encrypted Client Hello (ECH)
+retry configurations is described.
+This method enables the use of multiple
+public names for the same server anonymity set. 
     " name="description">
 <meta content="xml2rfc 3.24.0" name="generator">
 <meta content="next generation" name="keyword">
@@ -1077,7 +1081,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Public Name Masquerade for TLS Encrypted Client Hello</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">An alternative method
+for authenticating Encrypted Client Hello (ECH)
+retry configurations is described.
+This method enables the use of multiple
+public names for the same server anonymity set.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1167,18 +1175,18 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-retry-configuration-authent" class="internal xref">Retry Configuration Authentication</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-deployment-considerations" class="internal xref">Deployment Considerations</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-deployment" class="internal xref">Deployment</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
                 <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-public-name-selection" class="internal xref">Public Name Selection</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
-                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-name-mappings" class="internal xref">Name Mappings</a></p>
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-one-to-one-name-mappings" class="internal xref">One-to-One Name Mappings</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-sample-procedures" class="internal xref">Sample Procedures</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-candidate-processes-for-nam" class="internal xref">Candidate Processes for Name Selection</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
                 <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-key-lifetime" class="internal xref">Key Lifetime</a></p>
@@ -1186,63 +1194,61 @@ svg :is([fill="white"], [fill^="#fff"]) {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
                 <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-ech-profiles" class="internal xref">ECH Profiles</a></p>
 </li>
-            </ul>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-sample-public-name-generati" class="internal xref">Sample Public Name Generation Method</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-sample-public-name-generati" class="internal xref">Sample Public Name Generation Method</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
-                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-authenticated-encryption" class="internal xref">Authenticated Encryption</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1.2.1">
-                    <p id="section-toc.1-1.8.2.1.2.1.1"><a href="#section-8.1.1" class="auto internal xref">8.1.1</a>.  <a href="#name-parameter-selection" class="internal xref">Parameter Selection</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3.2.1">
+                    <p id="section-toc.1-1.7.2.3.2.1.1"><a href="#section-7.3.1" class="auto internal xref">7.3.1</a>.  <a href="#name-authenticated-encryption" class="internal xref">Authenticated Encryption</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1.2.2">
-                    <p id="section-toc.1-1.8.2.1.2.2.1"><a href="#section-8.1.2" class="auto internal xref">8.1.2</a>.  <a href="#name-retry-configuration-generat" class="internal xref">Retry Configuration Generation</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3.2.2">
+                    <p id="section-toc.1-1.7.2.3.2.2.1"><a href="#section-7.3.2" class="auto internal xref">7.3.2</a>.  <a href="#name-parameter-selection" class="internal xref">Parameter Selection</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3.2.3">
+                    <p id="section-toc.1-1.7.2.3.2.3.1"><a href="#section-7.3.3" class="auto internal xref">7.3.3</a>.  <a href="#name-retry-configuration-generat" class="internal xref">Retry Configuration Generation</a></p>
 </li>
                 </ul>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.4">
+                <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="auto internal xref">7.4</a>.  <a href="#name-sample-authentication-key-g" class="internal xref">Sample Authentication Key Generation Method</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-recovery-of-anonymity-sets" class="internal xref">Recovery of Anonymity Sets</a></p>
+</li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
-                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-sample-authentication-key-g" class="internal xref">Sample Authentication Key Generation Method</a></p>
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-configuration-availability" class="internal xref">Configuration Availability</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-unique-mapping-to-hidden-na" class="internal xref">Unique Mapping To Hidden Names</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.4">
+                <p id="section-toc.1-1.8.2.4.1"><a href="#section-8.4" class="auto internal xref">8.4</a>.  <a href="#name-client-privacy" class="internal xref">Client Privacy</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
-                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-recovery-of-anonymity-sets" class="internal xref">Recovery of Anonymity Sets</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
-                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-configuration-availability" class="internal xref">Configuration Availability</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
-                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-unique-mapping-to-hidden-na" class="internal xref">Unique Mapping To Hidden Names</a></p>
-</li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4">
-                <p id="section-toc.1-1.9.2.4.1"><a href="#section-9.4" class="auto internal xref">9.4</a>.  <a href="#name-client-privacy" class="internal xref">Client Privacy</a></p>
-</li>
-            </ul>
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-references" class="internal xref">References</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-references" class="internal xref">References</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
-                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
             </ul>
 </li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1499,9 +1505,44 @@ or regard the connection as authenticated for the origin.<a href="#section-5-3" 
 </div>
 <div id="deployment">
 <section id="section-6">
-      <h2 id="name-deployment-considerations">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-deployment-considerations" class="section-name selfRef">Deployment Considerations</a>
+      <h2 id="name-deployment">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-deployment" class="section-name selfRef">Deployment</a>
       </h2>
+<p id="section-6-1">Client-facing server deployments
+can use dynamically-generated public names
+using techniques similar to those
+described in this section.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">The use of these techniques
+requires careful consideration of the privacy risks.
+Two basic outcomes are worth considering:<a href="#section-6-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-6-3.1">
+          <p id="section-6-3.1.1">ECH configurations
+that are never seen by an adversary.
+If this is achievable,
+unique public names can be provided to clients,
+which greatly improves privacy.
+The net effect can be that
+only the server IP address leaks information to observers
+about the extent of the anonymity set.<a href="#section-6-3.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-6-3.2">
+          <p id="section-6-3.2.1">ECH configurations are seen by adversaries.
+This is a more likely situation,
+because the use of DNS for distribution
+means that any given ECH configuration
+is likely to be served to many clients.<a href="#section-6-3.2.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-6-4"><a href="#unique-mapping" class="auto internal xref">Section 6.2</a> discusses how
+the choice of public name is important
+for maintaining the privacy of hidden names
+in the second case.
+<a href="#sample" class="auto internal xref">Section 7</a> discusses options
+for constructing public names
+to minimize the potential risks
+that come from adversary access to the ECH configuration.<a href="#section-6-4" class="pilcrow">¶</a></p>
+<p id="section-6-5">This section addresses other deployment considerations.<a href="#section-6-5" class="pilcrow">¶</a></p>
 <div id="name-selection">
 <section id="section-6.1">
         <h3 id="name-public-name-selection">
@@ -1521,37 +1562,41 @@ each joined with periods ('.').<a href="#section-6.1-2" class="pilcrow">¶</a></
 </div>
 <div id="unique-mapping">
 <section id="section-6.2">
-        <h3 id="name-name-mappings">
-<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-name-mappings" class="section-name selfRef">Name Mappings</a>
+        <h3 id="name-one-to-one-name-mappings">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-one-to-one-name-mappings" class="section-name selfRef">One-to-One Name Mappings</a>
         </h3>
 <p id="section-6.2-1">A simple method for generating public names
 is to generate a fresh name
 for every ECH configuration.
 If every public name is different,
-then each public name uniquely maps
+then each public name also corresponds
 to a single hidden name.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.2-2">A unique public name for each request therefore depends
-on the ECH configuration remaining secret.
-Unique names are incompatible with distribution using DNS,
+<p id="section-6.2-2">Use of such a public name
+reveals the hidden name
+to any entity that knows of the relation.
+Using a unique public name for every hidden name
+is therely only possible
+if the ECH configuration can be kept secret.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.2-3">Unique names are incompatible with distribution using DNS,
 which involves shared caches at recursive resolvers.
 An adversary that is able to obtain
 the ECH configuration from a shared DNS cache
 would be able to learn the hidden name
-that corresponds to the included public name.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.2-3">It is therefore important that any given public name
+that corresponds to the included public name.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
+<p id="section-6.2-4">It is therefore important that any given public name
 be plausibly associated with multiple hidden names.
 This can be achieved by increasing
 the size of the anonymity set,
 together with the inclusion of information that
-diversifies the public name.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
+diversifies the public name.<a href="#section-6.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
-<div id="sample-procedures">
+<div id="sample">
 <section id="section-7">
-      <h2 id="name-sample-procedures">
-<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-sample-procedures" class="section-name selfRef">Sample Procedures</a>
+      <h2 id="name-candidate-processes-for-nam">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-candidate-processes-for-nam" class="section-name selfRef">Candidate Processes for Name Selection</a>
       </h2>
 <p id="section-7-1">A deployment can generate a secret
 and distribute that secret
@@ -1562,21 +1607,27 @@ might be generated using a counter.<a href="#section-7-1" class="pilcrow">¶</a>
 <p id="section-7-2">The secret can be split into two parts for use:<a href="#section-7-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7-3.1">
-          <p id="section-7-3.1.1">A key for enciphering public names (<a href="#sample-pn-enc" class="auto internal xref">Section 8</a>).<a href="#section-7-3.1.1" class="pilcrow">¶</a></p>
+          <p id="section-7-3.1.1">A key for enciphering public names.
+<a href="#sample-pn-enc" class="auto internal xref">Section 7.3</a> describes a sample process.<a href="#section-7-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-7-3.2">
-          <p id="section-7-3.2.1">A key for generating authentication keys (<a href="#sample-authn-key" class="auto internal xref">Section 8.2</a>).<a href="#section-7-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-7-3.2.1">A secret for generating authentication keys.
+<a href="#sample-authn-key" class="auto internal xref">Section 7.4</a> addresses this process.<a href="#section-7-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-7-4">These secrets are used to
-generate public names that encode information
-about the ECH profile to select (see <a href="#profiles" class="auto internal xref">Section 7.2</a>).<a href="#section-7-4" class="pilcrow">¶</a></p>
+<p id="section-7-4">These secrets need to be distributed
+to all authoritative DNS resolvers for hidden names
+and all client-facing servers.
+There also needs to be a consistent view
+across these servers
+of how hidden names correspond to ECH profiles
+(a concept that this document defines in <a href="#profiles" class="auto internal xref">Section 7.2</a>).<a href="#section-7-4" class="pilcrow">¶</a></p>
 <div id="key-lifetime">
 <section id="section-7.1">
         <h3 id="name-key-lifetime">
 <a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-key-lifetime" class="section-name selfRef">Key Lifetime</a>
         </h3>
-<p id="section-7.1-1">If public names are encrypted,
+<p id="section-7.1-1">If public names are -- in effect -- encrypted,
 the lifetime of any keys that are used needs
 to exceed the lifetime of ECH keys.
 Otherwise, servers will be unable to recover
@@ -1609,66 +1660,78 @@ a set of HPKE symmetric cipher suites,
 any other extensions,
 and (optionally) a public name for use with clients
 that do not support this extension.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
-<p id="section-7.2-3">A client-facing server can limit the number of such profiles
-it supports at the one time.
-Each profile can be allocated an identifier.
+<p id="section-7.2-3">Each profile can be allocated an identifier.
 This identifier needs to be unique
-within the set of profiles that might be concurrently active.
-An identifier that is unique over a wide scope
+within the set of profiles that might be concurrently active.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
+<p id="section-7.2-4">A client-facing server can limit the number of such profiles
+it supports at the one time.
+An identifier that is unique
+over a larger scope or longer span of time
 is inadvisable as that makes it more difficult
-to avoid creating unique name mappings.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
-<p id="section-7.2-4">At any given time, each hidden name is mapped to a single profile.
-However, over time,
+to avoid creating unique name mappings (see <a href="#unique-mapping" class="auto internal xref">Section 6.2</a>).<a href="#section-7.2-4" class="pilcrow">¶</a></p>
+<p id="section-7.2-5">For a single ECH configuration,
+each hidden name needs to be mapped to a single profile.
+This ensures that a client-facing server
+is able to successfully answer connection attempts
+by decrypting the inner ClientHello
+or presenting a retry configuration with acceptable authentication.<a href="#section-7.2-5" class="pilcrow">¶</a></p>
+<p id="section-7.2-6">A hidden name might also be associated
+with different profiles
+and ECH configurations
+according to deployment needs.
+In particular,
 hidden names might be mapped to different profiles,
 as key pairs are rotated
-or changes are made to account for different deployment strategies.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
-<p id="section-7.2-5">With an unmodified ECH deployment,
+or changes are made to account for different deployment strategies.<a href="#section-7.2-6" class="pilcrow">¶</a></p>
+<p id="section-7.2-7">With an unmodified ECH deployment,
 a client-facing server uses the combination of
 the <code>config_id</code> from the outer "encrypted_client_hello" extension
 and the public name from the "server_name" extension
-to recover a profile.<a href="#section-7.2-5" class="pilcrow">¶</a></p>
-<p id="section-7.2-6">In this design,
+to recover a profile.<a href="#section-7.2-7" class="pilcrow">¶</a></p>
+<p id="section-7.2-8">In this design,
 a client-facing server uses the same information,
 except that the true profile identifier is encrypted
-and encoded into these two fields.<a href="#section-7.2-6" class="pilcrow">¶</a></p>
-</section>
-</div>
+and encoded into these two fields.<a href="#section-7.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sample-pn-enc">
-<section id="section-8">
-      <h2 id="name-sample-public-name-generati">
-<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-sample-public-name-generati" class="section-name selfRef">Sample Public Name Generation Method</a>
-      </h2>
-<p id="section-8-1">Public names might be generated by
-enciphering the profile identifier.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">Additional information is added to the name to ensure
-that there is a limited amount of diversity in public names.
-The amount of entropy included for diversification is limited
-so that there is a non-negligible chance that
-different inputs produce the same outcome.
-This can be achieved by hashing the inputs used for diversifying names
-and taking a limited number of bits from the output.<a href="#section-8-2" class="pilcrow">¶</a></p>
-<p id="section-8-3">Inputs used for diversification include:<a href="#section-8-3" class="pilcrow">¶</a></p>
+<section id="section-7.3">
+        <h3 id="name-sample-public-name-generati">
+<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-sample-public-name-generati" class="section-name selfRef">Sample Public Name Generation Method</a>
+        </h3>
+<p id="section-7.3-1">Public names might be generated by
+enciphering the profile identifier.
+The encipher values is then encoded into a public name
+and, optionally, the configuration identifier field.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
+<p id="section-7.3-2">If this were to only contain the profile identifier,
+each profile identifier might produce just one public name.
+To diversify the set of public names,
+additional information is encoded in each name.<a href="#section-7.3-2" class="pilcrow">¶</a></p>
+<p id="section-7.3-3">The amount of entropy included for diversification is limited
+so that there is a significant chance that
+different hidden names produce the same public name.
+This is achieved by hashing the inputs used for diversifying names
+and taking a limited number of bits from the output.<a href="#section-7.3-3" class="pilcrow">¶</a></p>
+<p id="section-7.3-4">Suggested inputs that can be used for diversification
+include:<a href="#section-7.3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-8-4.1">
-          <p id="section-8-4.1.1">The IP address of the DNS client,
+<li class="normal" id="section-7.3-5.1">
+            <p id="section-7.3-5.1.1">The IP address of the DNS client,
 or the DNS Client Subnet option,
-if present.<a href="#section-8-4.1.1" class="pilcrow">¶</a></p>
+if present.<a href="#section-7.3-5.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-8-4.2">
-          <p id="section-8-4.2.1">The current time,
+          <li class="normal" id="section-7.3-5.2">
+            <p id="section-7.3-5.2.1">The current time,
 rounded to the expected DNS record TTL
 or a small integer fraction of that time.
 For instance, with a TTL of 30 seconds
-the time might be rounded to multiples of 5 seconds.<a href="#section-8-4.2.1" class="pilcrow">¶</a></p>
+the time might be rounded to multiples of 5 seconds.<a href="#section-7.3-5.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-8-4.3">
-          <p id="section-8-4.3.1">A small amount of randomness that will
-ensure that the resulting public name is less predictable.<a href="#section-8-4.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-7.3-5.3">
+            <p id="section-7.3-5.3.1">A small amount of randomness.<a href="#section-7.3-5.3.1" class="pilcrow">¶</a></p>
 </li>
-      </ul>
-<p id="section-8-5">In the following pseudocode
+        </ul>
+<p id="section-7.3-6">In the following pseudocode
 '<code>^</code>' is an exclusive OR,
 '<code>||</code>' is concatenation,
 and '<code>[a..b]</code>' takes a range of bits
@@ -1676,8 +1739,8 @@ from bit '<code>a</code>' (inclusive, default 0) to bit '<code>b</code>' (exclus
 This code also uses functions for randomness ('<code>random()</code>'),
 a collision-resistant hash ('<code>H()</code>'),
 a pseudorandom function ('<code>prf()</code>'),
-and encoding a byte sequence as a DNS name ('<code>encode_dns()</code>').<a href="#section-8-5" class="pilcrow">¶</a></p>
-<div class="lang-pseudocode sourcecode" id="section-8-6">
+and encoding a byte sequence as a DNS name ('<code>encode_dns()</code>').<a href="#section-7.3-6" class="pilcrow">¶</a></p>
+<div class="lang-pseudocode sourcecode" id="section-7.3-7">
 <pre>
 k1 = prf(secret, "k1" || key_id)
 r = random()[..RANDOM_BITS]
@@ -1688,81 +1751,86 @@ d = key_id || k1 ^ (diversity || k2 ^ profile_id)
 
 config_id = d[0..8]
 public_name = encode_dns(d[8..])
-</pre><a href="#section-8-6" class="pilcrow">¶</a>
+</pre><a href="#section-7.3-7" class="pilcrow">¶</a>
 </div>
-<aside id="section-8-7">
-        <p id="section-8-7.1">Note that the PRF function only needs
+<aside id="section-7.3-8">
+          <p id="section-7.3-8.1">Note that the PRF function only needs
 to produce enough bits
 to mask the value it obscures using XOR.
-Any additional bits can be discarded.<a href="#section-8-7.1" class="pilcrow">¶</a></p>
+Any additional bits can be discarded.<a href="#section-7.3-8.1" class="pilcrow">¶</a></p>
 </aside>
-<aside id="section-8-8">
-        <p id="section-8-8.1">ISSUE:
+<aside id="section-7.3-9">
+          <p id="section-7.3-9.1">ISSUE:
 This approach reveals to an observer that two
-values share a <code>diversity</code> value.<a href="#section-8-8.1" class="pilcrow">¶</a></p>
-<p id="section-8-8.2">Something like format-preserving encryption
+values share a <code>diversity</code> value.<a href="#section-7.3-9.1" class="pilcrow">¶</a></p>
+<p id="section-7.3-9.2">Something like format-preserving encryption
 might be necessary.
 For instance,
 a Feistel network might ensure that the entire value
 depends on all inputs,
-including the profile identifier.<a href="#section-8-8.2" class="pilcrow">¶</a></p>
-<p id="section-8-8.3">The challenge being that
+including the profile identifier.<a href="#section-7.3-9.2" class="pilcrow">¶</a></p>
+<p id="section-7.3-9.3">The challenge being that
 the two layers of protection here,
 to protect the profile identifier
 and the diversity value,
-would each require an application of the network.<a href="#section-8-8.3" class="pilcrow">¶</a></p>
+would each require an application of the network.<a href="#section-7.3-9.3" class="pilcrow">¶</a></p>
 </aside>
 <div id="authenticated-encryption">
-<section id="section-8.1">
-        <h3 id="name-authenticated-encryption">
-<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-authenticated-encryption" class="section-name selfRef">Authenticated Encryption</a>
-        </h3>
-<p id="section-8.1-1">The use of authenticated encryption <span>[<a href="#AEAD" class="cite xref">AEAD</a>]</span>
+<section id="section-7.3.1">
+          <h4 id="name-authenticated-encryption">
+<a href="#section-7.3.1" class="section-number selfRef">7.3.1. </a><a href="#name-authenticated-encryption" class="section-name selfRef">Authenticated Encryption</a>
+          </h4>
+<p id="section-7.3.1-1">The use of authenticated encryption <span>[<a href="#AEAD" class="cite xref">AEAD</a>]</span>
 is not necessary to achieve privacy goals.
 Authentication identifies any name
-that is generated without access to the key.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
-<p id="section-8.1-2">Avoiding authentication ensures that an adversary
+that is generated without access to the key.<a href="#section-7.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.3.1-2">Avoiding authentication ensures that an adversary
 is unable to use side channels
 to determine whether any given public name is valid
-as all public names receive the same treatment.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.1-3">Authenticated encryption could be used
+as all public names receive the same treatment.<a href="#section-7.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-7.3.1-3">Authenticated encryption could be used
 if a deployment is concerned about
 the cost of responding to connection attempts.
 This approach could lead to
 a significant amount of additional load
 on servers due to the need to generate authentication keys
-and certificates for every unique public name.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
-<p id="section-8.1-4">Using authenticated encryption only
+and certificates for every unique public name.<a href="#section-7.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-7.3.1-4">Using authenticated encryption only
 increases the length of public names;
 it does not increase the diversity of names.
 Authentication of names therefore
-does not affect the potential privacy of public names.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
+does not affect the potential privacy of public names.<a href="#section-7.3.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
 <div id="parameter-selection">
-<section id="section-8.1.1">
+<section id="section-7.3.2">
           <h4 id="name-parameter-selection">
-<a href="#section-8.1.1" class="section-number selfRef">8.1.1. </a><a href="#name-parameter-selection" class="section-name selfRef">Parameter Selection</a>
+<a href="#section-7.3.2" class="section-number selfRef">7.3.2. </a><a href="#name-parameter-selection" class="section-name selfRef">Parameter Selection</a>
           </h4>
-<p id="section-8.1.1-1">An adversary that is able to make a request
+<p id="section-7.3.2-1">An adversary that is able to make a request
 at about the same time
 and from the same client IP or subnet
 will learn the mapping from hidden name to public name.
 Including more randomness
 will reduce the odds that the same public name
-is used for a different hidden name.<a href="#section-8.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-8.1.1-2">The optimal number of random bits that are added
+is used for a different hidden name.<a href="#section-7.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.3.2-2">The optimal number of random bits that are added
 (<code>RANDOM_BITS</code>)
 depends on the number of hidden names that
 correspond to the same profile identifier,
 that is, the size of the anonymity set.
 Larger anonymity sets allow for more diversity in names
 as there are more public names generated
-and a higher chance of collision.<a href="#section-8.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.1.1-3">For <code>RANDOM_BITS</code>,
+and a higher chance of collision.<a href="#section-7.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.3.2-3">For <code>RANDOM_BITS</code>,
 generating less than twice the number of bits
-as the base-2 logarithm of the anonymity set size
+as the base 2 logarithm of the anonymity set size
 ensures that a collision across the names in the set
-is highly likely.<a href="#section-8.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-8.1.1-4">Combining this information using a hash function,
+is highly likely.
+This value might be set significantly less than this limit
+to account for the risk that not all hidden names
+will be in active use.<a href="#section-7.3.2-3" class="pilcrow">¶</a></p>
+<p id="section-7.3.2-4">Combining this information using a hash function,
 then taking a limited number of bits
 ensures that the number of public names is limited.
 This improves the chances that the same public name
@@ -1772,39 +1840,42 @@ The number of bits that are retained
 can exceed the number of random bits,
 but only based on the expected number of different
 ECH configurations that might be concurrently active
-for the anonymity set.<a href="#section-8.1.1-4" class="pilcrow">¶</a></p>
-<p id="section-8.1.1-5">Setting <code>DIVERSITY_BITS</code> to less than twice
-the base-2 logarithm of the total number of ECH configurations
+for the active names in the anonymity set.<a href="#section-7.3.2-4" class="pilcrow">¶</a></p>
+<p id="section-7.3.2-5">Setting <code>DIVERSITY_BITS</code>
+to less than twice the base 2 logarithm
+of the total number of ECH configurations
 ensures that a collision across the names in the set
-is highly likely.
-The total number of ECH configurations can be determined
-empirically as the number of queries that are answered
-with different answers
+is highly likely.<a href="#section-7.3.2-5" class="pilcrow">¶</a></p>
+<p id="section-7.3.2-6">The total number of ECH configurations can be determined
+most reliably using an empirical measure.
+DNS resolvers might count the number of queries
+that produce different answers
 for hidden names with the same profile
-within a TTL.
-Alternatively, the number of possible active ECH configurations
+within the TTL of the resource record.<a href="#section-7.3.2-6" class="pilcrow">¶</a></p>
+<p id="section-7.3.2-7">Alternatively, the number of possible active ECH configurations
 is the anonymity set size
 times an estimate of the number of different resolvers.
-The alternative approach likely produces a larger value,
-so it might be adjusted downward by a constant factor.<a href="#section-8.1.1-5" class="pilcrow">¶</a></p>
-<p id="section-8.1.1-6">In both cases,
+The alternative approach likely produces a larger estimate,
+so it might be adjusted downward
+to improve the odds of collisions.<a href="#section-7.3.2-7" class="pilcrow">¶</a></p>
+<p id="section-7.3.2-8">In both cases,
 a minimum amount random entropy
 ensures that even small anonymity set has some diversity.
 A minimum of 5 bits ensures that
 every hidden name produces public names
-from 32 different options.<a href="#section-8.1.1-6" class="pilcrow">¶</a></p>
+from 32 different options.<a href="#section-7.3.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="retry-configuration-generation">
-<section id="section-8.1.2">
+<div id="retry-unique">
+<section id="section-7.3.3">
           <h4 id="name-retry-configuration-generat">
-<a href="#section-8.1.2" class="section-number selfRef">8.1.2. </a><a href="#name-retry-configuration-generat" class="section-name selfRef">Retry Configuration Generation</a>
+<a href="#section-7.3.3" class="section-number selfRef">7.3.3. </a><a href="#name-retry-configuration-generat" class="section-name selfRef">Retry Configuration Generation</a>
           </h4>
-<p id="section-8.1.2-1">The process described here can be greatly simplified
+<p id="section-7.3.3-1">The process described here can be greatly simplified
 for ECH configurations that are
 generated by a TLS server
-and sent in the "retry_configs" field.<a href="#section-8.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-8.1.2-2">Every ECH configuration that is provided
+and sent in the "retry_configs" field.<a href="#section-7.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-7.3.3-2">Every ECH configuration that is provided
 using "retry_configs"
 can be unique.
 This can be achieved
@@ -1812,95 +1883,92 @@ by setting <code>DIVERSITY_BITS</code> and <code>RANDOM_BITS</code>
 to values that are large enough to ensure
 that the collision risk is negligible.
 The only relevant consideration is
-the length of the resulting public name.<a href="#section-8.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-8.1.2-3">If a different scheme is used
+the length of the resulting public name.<a href="#section-7.3.3-2" class="pilcrow">¶</a></p>
+<p id="section-7.3.3-3">If a different scheme is used
 for generating public names
 based on how the ECH configurations are delivered,
 it is necessary to distinguish between the forms.
 This could use the unprotected key identifier
 or just the length of the name
 (using a larger value of <code>DIVERSITY_BITS</code>
-likely results in a longer name).<a href="#section-8.1.2-3" class="pilcrow">¶</a></p>
+likely results in a longer name).<a href="#section-7.3.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="sample-authn-key">
-<section id="section-8.2">
+<section id="section-7.4">
         <h3 id="name-sample-authentication-key-g">
-<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-sample-authentication-key-g" class="section-name selfRef">Sample Authentication Key Generation Method</a>
+<a href="#section-7.4" class="section-number selfRef">7.4. </a><a href="#name-sample-authentication-key-g" class="section-name selfRef">Sample Authentication Key Generation Method</a>
         </h3>
-<p id="section-8.2-1">An ECH configuration can be generated by
-an authoritative resolver
-in response to request.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
-<p id="section-8.2-2">A SVCB (or equivalent, like HTTPS) RR for a hidden name
-is first mapped to an identifier for the anonymity set.
-This might be the public name
-that is provided to clients
-that do not support this extension.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
-<p id="section-8.2-3">The resolver then collects information
-that might be used to diversify the name.
-This includes the client IP address or subnet prefix,
-the time,
-and potentially a small amount of randomness;
-see <a href="#unique-mapping" class="auto internal xref">Section 6.2</a>.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
-<p id="section-8.2-4">An authentication key might be generated as a function of the public name,
+<p id="section-7.4-1">An authentication key might be generated as a function of the public name,
 and optionally the config_id,
-using a pseudorandom function (PRF) that is keyed with the secret.<a href="#section-8.2-4" class="pilcrow">¶</a></p>
+using a pseudorandom function (PRF) that is keyed with a secret.<a href="#section-7.4-1" class="pilcrow">¶</a></p>
+<div class="lang-pseudocode sourcecode" id="section-7.4-2">
+<pre>
+authn_secret = prf(secret, public_name)
+authn_public_key = pk(authn_secret)
+</pre><a href="#section-7.4-2" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 </section>
 </div>
 <div id="security">
-<section id="section-9">
+<section id="section-8">
       <h2 id="name-security-considerations">
-<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-9-1">Use of this mechanism inherits
+<p id="section-8-1">Use of this mechanism inherits
 many of the security considerations from <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#section-10" class="relref">Section 10</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.
 Depending on how it is deployed,
 it can alter the privacy characteristics,
 as it obscures the extent of an anonymity set
 presented by a client-facing server;
-see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#section-10.1" class="relref">Section 10.1</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="#section-9-1" class="pilcrow">¶</a></p>
+see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#section-10.1" class="relref">Section 10.1</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <div id="recovery-of-anonymity-sets">
-<section id="section-9.1">
+<section id="section-8.1">
         <h3 id="name-recovery-of-anonymity-sets">
-<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-recovery-of-anonymity-sets" class="section-name selfRef">Recovery of Anonymity Sets</a>
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-recovery-of-anonymity-sets" class="section-name selfRef">Recovery of Anonymity Sets</a>
         </h3>
-<p id="section-9.1-1">This design only permits linking public names
+<p id="section-8.1-1">This design only permits linking public names
 based on what an adversary can observe about the relation
 between each hidden name
-and all of the public names that are used for that each hidden name.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
-<p id="section-9.1-2">Obviously, the reuse of a name
-would reveal that two identical names share a configuration.
+and all of the public names that are used for that each hidden name.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">Obviously, the reuse of a public name
+reveals that the connection attempts
+are accessing the same ECH configuration.
 The use of ECH still means that uses of those public names
-could correspond to different hidden names.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
-<p id="section-9.1-3">To provide a comprehensible view of the true anonymity set,
+could correspond to different hidden names.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.1-3">To provide a comprehensible view of the true anonymity set,
 an adversary would need to obtain all public names
-that are in use across all hidden names.
+that are in use across all hidden names in the set.
 If different names are provided in response to every DNS query
 from an authoritative resolver,
 an adversary would --
 at best --
 need to query every DNS resolver cache that queries that authoritative.
-This makes it far more difficult
+Diversifying the choice of name based on client IP
+or the Client Subnet option
+ensures that an adversary needs to make multiple queries
+to obtain all of the mappings.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.1-4">This makes it far more difficult
 to get a precise enumeration of the names that correspond
-to any given anonymity set.<a href="#section-9.1-3" class="pilcrow">¶</a></p>
+to any given anonymity set.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="configuration-availability">
-<section id="section-9.2">
+<section id="section-8.2">
         <h3 id="name-configuration-availability">
-<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-configuration-availability" class="section-name selfRef">Configuration Availability</a>
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-configuration-availability" class="section-name selfRef">Configuration Availability</a>
         </h3>
-<p id="section-9.2-1">An adversary that is able to obtain
+<p id="section-8.2-1">An adversary that is able to obtain
 every ECH configuration that is ever produced
 can recover the anonymity set perfectly.
 This design therefore depends on
 adversaries being unable to
-access all ECH configurations.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
-<p id="section-9.2-2">Clients that use shared DNS caching resolvers
+access all ECH configurations.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.2-2">Clients that use shared DNS caching resolvers
 are less able to benefit from these protections.
 Caching resolvers can improve privacy protections
 by including the Client Subnet option <span>[<a href="#RFC7871" class="cite xref">RFC7871</a>]</span>
@@ -1910,50 +1978,68 @@ change the public name based on the Client Subnet prefix.
 An adversary would then need to
 present an IP address with the same prefix as a target
 to learn the ECH configuration
-that the target was presented with.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
-<p id="section-9.2-3">A shorter TTL on resource records
-increases the work required by an adversary.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
+that the target was presented with.<a href="#section-8.2-2" class="pilcrow">¶</a></p>
+<p id="section-8.2-3">A shorter TTL on resource records
+increases the work required by an adversary.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
+<p id="section-8.2-4">An authoritative DNS resolver that generates public names
+based on the Client Subnet option
+makes it easier for an adversary to enumerate
+all the available public names
+for a given hidden name.
+The adversary can easily vary the Client Subnet option
+that it includes in queries.
+Whether the space is easily enumerable depends on
+the minimum of
+how many different public names might be generated
+and how many Client Subnet values are in use.<a href="#section-8.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="unique-mapping-to-hidden-names">
-<section id="section-9.3">
+<section id="section-8.3">
         <h3 id="name-unique-mapping-to-hidden-na">
-<a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-unique-mapping-to-hidden-na" class="section-name selfRef">Unique Mapping To Hidden Names</a>
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-unique-mapping-to-hidden-na" class="section-name selfRef">Unique Mapping To Hidden Names</a>
         </h3>
-<p id="section-9.3-1">The use of a unique public name
+<p id="section-8.3-1">The use of a unique public name
 could identify the hidden name.
 If each hidden name corresponds to a different public name,
 an adversary that is able to obtain that mapping
 might reverse the mapping to recover the hidden name
 from the unprotected "server_name" extension.
-This attack is addressed in <a href="#unique-mapping" class="auto internal xref">Section 6.2</a>.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+This attack is described in <a href="#unique-mapping" class="auto internal xref">Section 6.2</a>;
+potential mitigations are described in <a href="#sample-pn-enc" class="auto internal xref">Section 7.3</a>.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3-2">Providing a unique name mapping
+in a retry configuration
+carries no such risk;
+see <a href="#retry-unique" class="auto internal xref">Section 7.3.3</a>.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="client-privacy">
-<section id="section-9.4">
+<section id="section-8.4">
         <h3 id="name-client-privacy">
-<a href="#section-9.4" class="section-number selfRef">9.4. </a><a href="#name-client-privacy" class="section-name selfRef">Client Privacy</a>
+<a href="#section-8.4" class="section-number selfRef">8.4. </a><a href="#name-client-privacy" class="section-name selfRef">Client Privacy</a>
         </h3>
-<p id="section-9.4-1">The method in <a href="#unique-mapping" class="auto internal xref">Section 6.2</a> recommends
+<p id="section-8.4-1">The method in <a href="#unique-mapping" class="auto internal xref">Section 6.2</a> recommends
 the inclusion of a client IP address
 or the identity of its DNS recursive resolver
 in the derivation of a public name.
-This introduces a potential privacy leak.<a href="#section-9.4-1" class="pilcrow">¶</a></p>
-<p id="section-9.4-2">Any entity that can observe the TLS handshake
+This introduces a potential privacy leak.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
+<p id="section-8.4-2">Any entity that can observe the TLS handshake
 and is also able to obtain the same ECH configuration
 might be able to learn something about the client IP address
 or DNS resolver from the public name that is used.
 The client-facing server also obtains the same information
-with higher certainty.<a href="#section-9.4-2" class="pilcrow">¶</a></p>
-<p id="section-9.4-3">This risk is partly counteracted by
-the use of an entropy narrowing function
-as part of the public name generation process.
+with higher certainty.<a href="#section-8.4-2" class="pilcrow">¶</a></p>
+<p id="section-8.4-3">This risk is partly counteracted by
+the limited number of bits that are retained
+when generating public names in <a href="#sample-pn-enc" class="auto internal xref">Section 7.3</a>.
 That increases the chances that different inputs
-result in the same public name.
+result in the same public name,
+which might help if the adversary has no prior knowledge
+of the client.
 However, if an adversary only seeks to improve their confidence
 in an existing hypothesis of client identity,
-this is unlikely to be sufficient.<a href="#section-9.4-3" class="pilcrow">¶</a></p>
-<p id="section-9.4-4">A client that uses a tunnel,
+this is unlikely to be sufficient protection.<a href="#section-8.4-3" class="pilcrow">¶</a></p>
+<p id="section-8.4-4">A client that uses a tunnel,
 such as a VPN or proxy,
 for privacy purposes
 can avoid leaking unwanted information
@@ -1963,57 +2049,57 @@ for the use of this sort of privacy mechanism
 for reasons other than privacy,
 such as ensuring that services are selected
 for proximity to the tunnel egress point
-rather than proximity to the client.<a href="#section-9.4-4" class="pilcrow">¶</a></p>
+rather than proximity to the client.<a href="#section-8.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="iana">
-<section id="section-10">
+<section id="section-9">
       <h2 id="name-iana-considerations">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-10-1">This document registers an extension
+<p id="section-9-1">This document registers an extension
 in the TLS "ECH Configuration Extension Registry"
-established by <span>[<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlCompact dlParallel" id="section-10-2">
-        <dt id="section-10-2.1">Value:</dt>
-        <dd style="margin-left: 1.5em" id="section-10-2.2">
-          <p id="section-10-2.2.1">0xTBD (value has to be 0x8000 or greater)<a href="#section-10-2.2.1" class="pilcrow">¶</a></p>
+established by <span>[<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlCompact dlParallel" id="section-9-2">
+        <dt id="section-9-2.1">Value:</dt>
+        <dd style="margin-left: 1.5em" id="section-9-2.2">
+          <p id="section-9-2.2.1">0xTBD (value has to be 0x8000 or greater)<a href="#section-9-2.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-10-2.3">Extension Name:</dt>
-        <dd style="margin-left: 1.5em" id="section-10-2.4">
-          <p id="section-10-2.4.1">public_name_authn<a href="#section-10-2.4.1" class="pilcrow">¶</a></p>
+<dt id="section-9-2.3">Extension Name:</dt>
+        <dd style="margin-left: 1.5em" id="section-9-2.4">
+          <p id="section-9-2.4.1">public_name_authn<a href="#section-9-2.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-10-2.5">Recommended:</dt>
-        <dd style="margin-left: 1.5em" id="section-10-2.6">
-          <p id="section-10-2.6.1">Y<a href="#section-10-2.6.1" class="pilcrow">¶</a></p>
+<dt id="section-9-2.5">Recommended:</dt>
+        <dd style="margin-left: 1.5em" id="section-9-2.6">
+          <p id="section-9-2.6.1">Y<a href="#section-9-2.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-10-2.7">Reference:</dt>
-        <dd style="margin-left: 1.5em" id="section-10-2.8">
-          <p id="section-10-2.8.1">This document<a href="#section-10-2.8.1" class="pilcrow">¶</a></p>
+<dt id="section-9-2.7">Reference:</dt>
+        <dd style="margin-left: 1.5em" id="section-9-2.8">
+          <p id="section-9-2.8.1">This document<a href="#section-9-2.8.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
-<dt id="section-10-2.9">Notes:</dt>
-        <dd style="margin-left: 1.5em" id="section-10-2.10">
-          <p id="section-10-2.10.1">(none)<a href="#section-10-2.10.1" class="pilcrow">¶</a></p>
+<dt id="section-9-2.9">Notes:</dt>
+        <dd style="margin-left: 1.5em" id="section-9-2.10">
+          <p id="section-9-2.10.1">(none)<a href="#section-9-2.10.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
 </section>
 </div>
 <div id="sec-combined-references">
-<section id="section-11">
+<section id="section-10">
       <h2 id="name-references">
-<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
 <div id="sec-normative-references">
-<section id="section-11.1">
+<section id="section-10.1">
         <h3 id="name-normative-references">
-<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="ECH">[ECH]</dt>
@@ -2032,9 +2118,9 @@ established by <span>[<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="
 </section>
 </div>
 <div id="sec-informative-references">
-<section id="section-11.2">
+<section id="section-10.2">
         <h3 id="name-informative-references">
-<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="AEAD">[AEAD]</dt>
