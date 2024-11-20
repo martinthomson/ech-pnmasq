@@ -40,7 +40,11 @@ informative:
 
 --- abstract
 
-TODO Abstract
+An alternative method
+for authenticating Encrypted Client Hello (ECH)
+retry configurations is described.
+This method enables the use of multiple
+public names for the same server anonymity set.
 
 
 --- middle
@@ -312,7 +316,42 @@ provide a certificate if requested
 or regard the connection as authenticated for the origin.
 
 
-# Deployment Considerations {#deployment}
+# Deployment {#deployment}
+
+Client-facing server deployments
+can use dynamically-generated public names
+using techniques similar to those
+described in this section.
+
+The use of these techniques
+requires careful consideration of the privacy risks.
+Two basic outcomes are worth considering:
+
+* ECH configurations
+  that are never seen by an adversary.
+  If this is achievable,
+  unique public names can be provided to clients,
+  which greatly improves privacy.
+  The net effect can be that
+  only the server IP address leaks information to observers
+  about the extent of the anonymity set.
+
+* ECH configurations are seen by adversaries.
+  This is a more likely situation,
+  because the use of DNS for distribution
+  means that any given ECH configuration
+  is likely to be served to many clients.
+
+{{unique-mapping}} discusses how
+the choice of public name is important
+for maintaining the privacy of hidden names
+in the second case.
+{{sample}} discusses options
+for constructing public names
+to minimize the potential risks
+that come from adversary access to the ECH configuration.
+
+This section addresses other deployment considerations.
 
 
 ## Public Name Selection {#name-selection}
@@ -330,17 +369,22 @@ as defined in {{Section 2.3.1 of ?IDNA=RFC5890}},
 each joined with periods ('.').
 
 
-## Name Mappings {#unique-mapping}
+## One-to-One Name Mappings {#unique-mapping}
 
 A simple method for generating public names
 is to generate a fresh name
 for every ECH configuration.
 If every public name is different,
-then each public name uniquely maps
+then each public name also corresponds
 to a single hidden name.
 
-A unique public name for each request therefore depends
-on the ECH configuration remaining secret.
+Use of such a public name
+reveals the hidden name
+to any entity that knows of the relation.
+Using a unique public name for every hidden name
+is therely only possible
+if the ECH configuration can be kept secret.
+
 Unique names are incompatible with distribution using DNS,
 which involves shared caches at recursive resolvers.
 An adversary that is able to obtain
@@ -356,7 +400,7 @@ together with the inclusion of information that
 diversifies the public name.
 
 
-# Sample Procedures
+# Candidate Processes for Name Selection {#sample}
 
 A deployment can generate a secret
 and distribute that secret
@@ -367,18 +411,24 @@ might be generated using a counter.
 
 The secret can be split into two parts for use:
 
-* A key for enciphering public names ({{sample-pn-enc}}).
+* A key for enciphering public names.
+  {{sample-pn-enc}} describes a sample process.
 
-* A key for generating authentication keys ({{sample-authn-key}}).
+* A secret for generating authentication keys.
+  {{sample-authn-key}} addresses this process.
 
-These secrets are used to
-generate public names that encode information
-about the ECH profile to select (see {{profiles}}).
+These secrets need to be distributed
+to all authoritative DNS resolvers for hidden names
+and all client-facing servers.
+There also needs to be a consistent view
+across these servers
+of how hidden names correspond to ECH profiles
+(a concept that this document defines in {{profiles}}).
 
 
 ## Key Lifetime {#key-lifetime}
 
-If public names are encrypted,
+If public names are -- in effect -- encrypted,
 the lifetime of any keys that are used needs
 to exceed the lifetime of ECH keys.
 Otherwise, servers will be unable to recover
@@ -412,17 +462,29 @@ any other extensions,
 and (optionally) a public name for use with clients
 that do not support this extension.
 
-A client-facing server can limit the number of such profiles
-it supports at the one time.
 Each profile can be allocated an identifier.
 This identifier needs to be unique
 within the set of profiles that might be concurrently active.
-An identifier that is unique over a wide scope
-is inadvisable as that makes it more difficult
-to avoid creating unique name mappings.
 
-At any given time, each hidden name is mapped to a single profile.
-However, over time,
+A client-facing server can limit the number of such profiles
+it supports at the one time.
+An identifier that is unique
+over a larger scope or longer span of time
+is inadvisable as that makes it more difficult
+to avoid creating unique name mappings (see {{unique-mapping}}).
+
+For a single ECH configuration,
+each hidden name needs to be mapped to a single profile.
+This ensures that a client-facing server
+is able to successfully answer connection attempts
+by decrypting the inner ClientHello
+or presenting a retry configuration with acceptable authentication.
+
+A hidden name might also be associated
+with different profiles
+and ECH configurations
+according to deployment needs.
+In particular,
 hidden names might be mapped to different profiles,
 as key pairs are rotated
 or changes are made to account for different deployment strategies.
@@ -439,20 +501,26 @@ except that the true profile identifier is encrypted
 and encoded into these two fields.
 
 
-# Sample Public Name Generation Method {#sample-pn-enc}
+## Sample Public Name Generation Method {#sample-pn-enc}
 
 Public names might be generated by
 enciphering the profile identifier.
+The encipher values is then encoded into a public name
+and, optionally, the configuration identifier field.
 
-Additional information is added to the name to ensure
-that there is a limited amount of diversity in public names.
+If this were to only contain the profile identifier,
+each profile identifier might produce just one public name.
+To diversify the set of public names,
+additional information is encoded in each name.
+
 The amount of entropy included for diversification is limited
-so that there is a non-negligible chance that
-different inputs produce the same outcome.
-This can be achieved by hashing the inputs used for diversifying names
+so that there is a significant chance that
+different hidden names produce the same public name.
+This is achieved by hashing the inputs used for diversifying names
 and taking a limited number of bits from the output.
 
-Inputs used for diversification include:
+Suggested inputs that can be used for diversification
+include:
 
 * The IP address of the DNS client,
   or the DNS Client Subnet option,
@@ -464,8 +532,7 @@ Inputs used for diversification include:
   For instance, with a TTL of 30 seconds
   the time might be rounded to multiples of 5 seconds.
 
-* A small amount of randomness that will
-  ensure that the resulting public name is less predictable.
+* A small amount of randomness.
 
 In the following pseudocode
 '`^`' is an exclusive OR,
@@ -562,9 +629,12 @@ and a higher chance of collision.
 
 For `RANDOM_BITS`,
 generating less than twice the number of bits
-as the base-2 logarithm of the anonymity set size
+as the base 2 logarithm of the anonymity set size
 ensures that a collision across the names in the set
 is highly likely.
+This value might be set significantly less than this limit
+to account for the risk that not all hidden names
+will be in active use.
 
 Combining this information using a hash function,
 then taking a limited number of bits
@@ -576,22 +646,27 @@ The number of bits that are retained
 can exceed the number of random bits,
 but only based on the expected number of different
 ECH configurations that might be concurrently active
-for the anonymity set.
+for the active names in the anonymity set.
 
-Setting `DIVERSITY_BITS` to less than twice
-the base-2 logarithm of the total number of ECH configurations
+Setting `DIVERSITY_BITS`
+to less than twice the base 2 logarithm
+of the total number of ECH configurations
 ensures that a collision across the names in the set
 is highly likely.
+
 The total number of ECH configurations can be determined
-empirically as the number of queries that are answered
-with different answers
+most reliably using an empirical measure.
+DNS resolvers might count the number of queries
+that produce different answers
 for hidden names with the same profile
-within a TTL.
+within the TTL of the resource record.
+
 Alternatively, the number of possible active ECH configurations
 is the anonymity set size
 times an estimate of the number of different resolvers.
-The alternative approach likely produces a larger value,
-so it might be adjusted downward by a constant factor.
+The alternative approach likely produces a larger estimate,
+so it might be adjusted downward
+to improve the odds of collisions.
 
 In both cases,
 a minimum amount random entropy
@@ -601,7 +676,7 @@ every hidden name produces public names
 from 32 different options.
 
 
-### Retry Configuration Generation
+### Retry Configuration Generation {#retry-unique}
 
 The process described here can be greatly simplified
 for ECH configurations that are
@@ -630,26 +705,14 @@ likely results in a longer name).
 
 ## Sample Authentication Key Generation Method {#sample-authn-key}
 
-An ECH configuration can be generated by
-an authoritative resolver
-in response to request.
-
-A SVCB (or equivalent, like HTTPS) RR for a hidden name
-is first mapped to an identifier for the anonymity set.
-This might be the public name
-that is provided to clients
-that do not support this extension.
-
-The resolver then collects information
-that might be used to diversify the name.
-This includes the client IP address or subnet prefix,
-the time,
-and potentially a small amount of randomness;
-see {{unique-mapping}}.
-
 An authentication key might be generated as a function of the public name,
 and optionally the config_id,
-using a pseudorandom function (PRF) that is keyed with the secret.
+using a pseudorandom function (PRF) that is keyed with a secret.
+
+~~~ pseudocode
+authn_secret = prf(secret, public_name)
+authn_public_key = pk(authn_secret)
+~~~
 
 
 # Security Considerations {#security}
@@ -670,19 +733,25 @@ based on what an adversary can observe about the relation
 between each hidden name
 and all of the public names that are used for that each hidden name.
 
-Obviously, the reuse of a name
-would reveal that two identical names share a configuration.
+Obviously, the reuse of a public name
+reveals that the connection attempts
+are accessing the same ECH configuration.
 The use of ECH still means that uses of those public names
 could correspond to different hidden names.
 
 To provide a comprehensible view of the true anonymity set,
 an adversary would need to obtain all public names
-that are in use across all hidden names.
+that are in use across all hidden names in the set.
 If different names are provided in response to every DNS query
 from an authoritative resolver,
 an adversary would --
 at best --
 need to query every DNS resolver cache that queries that authoritative.
+Diversifying the choice of name based on client IP
+or the Client Subnet option
+ensures that an adversary needs to make multiple queries
+to obtain all of the mappings.
+
 This makes it far more difficult
 to get a precise enumeration of the names that correspond
 to any given anonymity set.
@@ -712,6 +781,18 @@ that the target was presented with.
 A shorter TTL on resource records
 increases the work required by an adversary.
 
+An authoritative DNS resolver that generates public names
+based on the Client Subnet option
+makes it easier for an adversary to enumerate
+all the available public names
+for a given hidden name.
+The adversary can easily vary the Client Subnet option
+that it includes in queries.
+Whether the space is easily enumerable depends on
+the minimum of
+how many different public names might be generated
+and how many Client Subnet values are in use.
+
 
 ## Unique Mapping To Hidden Names
 
@@ -721,7 +802,13 @@ If each hidden name corresponds to a different public name,
 an adversary that is able to obtain that mapping
 might reverse the mapping to recover the hidden name
 from the unprotected "server_name" extension.
-This attack is addressed in {{unique-mapping}}.
+This attack is described in {{unique-mapping}};
+potential mitigations are described in {{sample-pn-enc}}.
+
+Providing a unique name mapping
+in a retry configuration
+carries no such risk;
+see {{retry-unique}}.
 
 
 ## Client Privacy
@@ -740,13 +827,15 @@ The client-facing server also obtains the same information
 with higher certainty.
 
 This risk is partly counteracted by
-the use of an entropy narrowing function
-as part of the public name generation process.
+the limited number of bits that are retained
+when generating public names in {{sample-pn-enc}}.
 That increases the chances that different inputs
-result in the same public name.
+result in the same public name,
+which might help if the adversary has no prior knowledge
+of the client.
 However, if an adversary only seeks to improve their confidence
 in an existing hypothesis of client identity,
-this is unlikely to be sufficient.
+this is unlikely to be sufficient protection.
 
 A client that uses a tunnel,
 such as a VPN or proxy,
