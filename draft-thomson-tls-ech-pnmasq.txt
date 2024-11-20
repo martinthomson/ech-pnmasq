@@ -22,8 +22,8 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://martinthomson.github.io/retch-sik/draft-thomson-tls-retch-
-   sik.html.  Status information for this document may be found at
+   https://martinthomson.github.io/ech-pnmasq/draft-thomson-tls-ech-
+   pnmasq.html.  Status information for this document may be found at
    https://datatracker.ietf.org/doc/draft-thomson-tls-ech-pnmasq/.
 
    Discussion of this document takes place on the Transport Layer
@@ -32,7 +32,7 @@ About This Document
    at https://www.ietf.org/mailman/listinfo/tls/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/martinthomson/retch-sik.
+   https://github.com/martinthomson/ech-pnmasq.
 
 Status of This Memo
 
