@@ -28,6 +28,10 @@ author:
     fullname: "Martin Thomson"
     organization: Mozilla
     email: "mt@lowentropy.net"
+ -
+    fullname: "Marwan Fayed"
+    organization: Cloudflare
+    email: marwan@cloudflare.com
 
 normative:
 
@@ -43,14 +47,52 @@ TODO Abstract
 
 # Introduction
 
-The TLS Encrypted Client Hello (ECH) {{?ECH=I-D.ietf-tls-esni}}
-defines a fallback mechanism
-that is used when a client attempts to use
-outdated or incorrect configuration.
+In a TLS Encrypted Client Hello (ECH) {{?ECH=I-D.ietf-tls-esni}},
+the level of privacy is directly proportional to the number of
+possible name(s) that could be encrypted in the
+`ClientHelloInner` relative to the name(s) in the
+`ClientHelloOuter`. 
+[comment]: However, as the anonymity set that results
+[comment]: depends on IP address, public name, and other configuration
+[comment]: parameters, perfect uniformity is essentially impossible to
+[comment]: achieve.
+This means that privacy is defined by the 'herd' of names and not
+of users, in direct contrast to longer-standing schemes for
+secure or private communication such as VPNs, Tor, and oblivious
+proxies, to name a few. For example, say a server can
+authenticate domains `example-1.com` through `example-5.com`,
+inclusive, and the server populates its `echconfig` with
+`example-ech.com`. In this case, an observer's ability to know
+the contents of the ClientHelloInner is neither advantaged nor
+disadvantaged by the number of users connecting to the
+ClientHelloOuter.
 
-This recovery is an essential feature of ECH,
-but it can contribute to a reduction in the size of
-the anonymity set of server identities.
+The natural way to improve privacy in this setting is to maximize
+the uniformity of visible information that is revealed to
+adversaries. An ideal arrangement uses a single consistent ECH
+configuration
+{{https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#name-encrypted-clienthello-confi}}
+across 
+[comment]: all clients or, alternatively, across
+all providers and servers. A single configuration creates an
+anonymity set consisting of all names from all servers.
+
+However, a consistent configuration negates any single server's
+ability to authenticate itself on the SNI in the
+ClientHelloOuter. Authentication against a public name is needed
+so the server can safely invoke a retry mechanism, for example,
+when a client attempts to use outdated or incorrect
+configuration. This recovery is an essential feature of ECH that
+also ensures a server attempts to decrypt only those ECH
+connections it expects, for example, so that a server for
+example.com does not attempt to decrypt ECH connections for
+not-example.com. 
+
+However, the need to authenticate a public name also limits the size of
+the anonymity set to the number of names available at the server,
+thereby upper-bounding ECH privacy to its server's deployment. 
+<PICK UP FROM HERE>
+
 A reduction occurs when a service needs to use
 the different public name values.
 The public name is chosen for the server deployment
@@ -59,21 +101,9 @@ A server deployment might rely on the public name
 to route incoming connections
 or select from different ECH configurations.
 
-The natural way to improve privacy in this setting is
-to maximize the uniformity of information
-that is revealed to adversaries.
-For privacy purposes,
-an ideal arrangement uses
-a single consistent configuration
-across all clients.
-However, as the anonymity set that results
-depends on IP address, public name, and
-other configuration parameters,
-perfect uniformity is essentially impossible to achieve.
-
 Each server operator might seek
 to ensure that it uses the minimum possible
-number of configurations to maximize the effective gprivacy.
+number of configurations to maximize the effective privacy.
 However, this can be at odds with operational constraints
 that might push toward having more diverse configurations.
 
