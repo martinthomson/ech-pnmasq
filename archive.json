@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-11-19T01:43:54.690542+00:00",
+  "timestamp": "2024-11-21T01:42:37.978236+00:00",
   "repo": "martinthomson/ech-pnmasq",
   "labels": [
     {
@@ -86,7 +86,7 @@
       "labels": [],
       "body": "Section 1.1 says:\r\n> In the ideal form of this approach, a unique public name is used for each client.\r\n\r\nI think this would be impactical for large deployments (particularly considering these names and corresponding keys would need to be shared and synced between DNS and TLS stacks).\r\n\r\nNow, this might be going too far, but in theory I imagine a DNS responder could generate a \"single-use\" (leaving DNS caching aside) RPK based on a random nonce and a secret pre-shared with whatever TLS terminating service. The random nonce could then be returned as part of the DNS response along with `spki_hash` of the RPK, and then reflected by the client to the TLS server, which could then generate the same key based on the same nonce and pre-shared secret.\r\n\r\nThis could require less state to be shared between DNS and TLS and allow for much more frequent public name rotation.\r\n\r\nThough it could potentially be a separate extension to be used along with `public_name_authn`.",
       "createdAt": "2024-11-18T16:37:24Z",
-      "updatedAt": "2024-11-18T21:59:01Z",
+      "updatedAt": "2024-11-20T04:12:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -95,6 +95,44 @@
           "body": "You hit a work in progress.  That's more or less exactly the design that I have in mind here.  Except that the public name is the nonce.  I have most of that design written down now, but it turns out to be fairly tricky to get right.\r\n\r\nThe challenge is in ensuring that a public name doesn't point straight at a single hidden name.  A \"single-use\" name can have that effect if your adversary is able to get the name, which is something that DNS caches tend to ensure will happen.  A true single use name wouldn't have this problem, but that would require the cooperation of recursive resolvers[^1].\r\n\r\n[^1]: There's an potential opportunity for a DNS extension here, maybe.  I predict that it would encounter some resistance from the community as it depends on disabling all of the benefits of caching.  Caching is pretty important to DNS, so disabling it would be a big decision.",
           "createdAt": "2024-11-18T21:59:00Z",
           "updatedAt": "2024-11-18T21:59:00Z"
+        },
+        {
+          "author": "dennisjackson",
+          "authorAssociation": "NONE",
+          "body": "Is it practical to have the client pick the public name rather than the server? This allows different clients to use different cover name selection strategies and means all the server has to do is generate an SPKI and a nonce, no complicated policy decisions for server providers on what cover names to pick from :-). \r\n\r\nYou could either use the PSK Token mode that ghedro suggested, a lighter nonce-based mode or use a unique per-connection token e.g. `Hash(hash_spki_From_DNS_HTTPS_RR || TLS_Client_Random)` carried in the ECH Extension. \r\n\r\nThrowing in the Client Random means that the caching problem goes away entirely and I guess the cost of a few SHA-256 invocations is pretty marginal compared to all the HPKE and HKDF calls flying around. It would require a small number of RPKs to be in use on the server-side though which might be problematic. ",
+          "createdAt": "2024-11-19T17:05:56Z",
+          "updatedAt": "2024-11-19T17:57:28Z"
+        },
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "I don't think that it is feasible to allow clients to pick the name.  If you consider that there is a limited surface in the outer ClientHello that the server can use to select the right first-order keys, then use those keys to pick the profile that is in use, the options are limited.\r\n\r\nYou could add another layer of public key encryption if your goal was to build an infinite stack of turtles.  So maybe that isn't an realistic option.\r\n\r\nThe challenge is that the client needs to be given information that effectively selects a server-side profile.  There are two cases to consider:\r\n\r\n1. Where the client receives information that the adversary doesn't have.  This is an ideal state, but one that shared caching makes virtually impossible if you are getting configurations from DNS.\r\n2. Where the client receives information that the adversary also has.  Any symmetric operations that a client might use will be as easy for the adversary to undo as it is for the server.  Your idea about hashing the SPKI is workable for the server only if the server has a limited set of SPKI values to check.  But an adversary will likely be able to recover that same set of values as well and they have a distinct advantage in terms of recovering them.\r\n\r\nIt occurs to me that the first is unlikely with SVCB, but 100% guaranteed with a retry configuration.  That makes this design highly desirable if you can get ECH configurations using a retry.  That is, if you can ever get into that state without revealing the hidden name to an adversary in the process.\r\n\r\nThat first connection is really the hard part of the problem.  It does mean that return visits to a site can be very well protected.  High value sites might even want to force clients to retry on first contact just to avoid that (which is directly opposite to what Bas suggests in #3).  It's a form of leap of faith, where a compromise on that first connection has consequences, but attackers cannot subsequently attack connections thereafter.",
+          "createdAt": "2024-11-20T04:12:13Z",
+          "updatedAt": "2024-11-20T04:12:13Z"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "I_kwDONPOULc6fTyzZ",
+      "title": "Trust ECHConfig",
+      "url": "https://github.com/martinthomson/ech-pnmasq/issues/3",
+      "state": "OPEN",
+      "author": "bwesterb",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Perhaps note that the ECHConfig provided during the retry should only be trusted as much as the original ECHConfig.",
+      "createdAt": "2024-11-19T16:29:46Z",
+      "updatedAt": "2024-11-20T03:54:27Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "body": "This doesn't really change those properties relative to the WebPKI-rooted option we have today.  After all, if an attacker can modify the DNS, they get to choose a name that they control.  Similarly, if they can complete a handshake and provide a retry config, then they get to choose a name that they control.\r\n\r\nThere is a degree of accountability in having a tie to the WebPKI like that, but it's really not that strong when you consider how easy it is to mint names.",
+          "createdAt": "2024-11-20T03:54:27Z",
+          "updatedAt": "2024-11-20T03:54:27Z"
         }
       ]
     }
