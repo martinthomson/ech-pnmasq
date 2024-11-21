@@ -51,7 +51,7 @@ In a TLS Encrypted Client Hello (ECH) {{?ECH=I-D.ietf-tls-esni}},
 the level of privacy is directly proportional to the number of
 possible name(s) that could be encrypted in the
 `ClientHelloInner` relative to the name(s) in the
-`ClientHelloOuter`. 
+`ClientHelloOuter`.
 [comment]: However, as the anonymity set that results
 [comment]: depends on IP address, public name, and other configuration
 [comment]: parameters, perfect uniformity is essentially impossible to
@@ -72,7 +72,7 @@ the uniformity of visible information that is revealed to
 adversaries. An ideal arrangement uses a single consistent ECH
 configuration
 {{https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#name-encrypted-clienthello-confi}}
-across 
+across
 [comment]: all clients or, alternatively, across
 all providers and servers. A single configuration creates an
 anonymity set consisting of all names from all servers.
@@ -86,12 +86,13 @@ configuration. This recovery is an essential feature of ECH that
 also ensures a server attempts to decrypt only those ECH
 connections it expects, for example, so that a server for
 example.com does not attempt to decrypt ECH connections for
-not-example.com. 
+not-example.com.
 
 However, the need to authenticate a public name also limits the size of
 the anonymity set to the number of names available at the server,
-thereby upper-bounding ECH privacy to its server's deployment. 
-<PICK UP FROM HERE>
+thereby upper-bounding ECH privacy to its server's deployment.
+
+**MF PICK UP FROM HERE**
 
 A reduction occurs when a service needs to use
 the different public name values.
