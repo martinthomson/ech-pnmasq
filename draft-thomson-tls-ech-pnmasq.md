@@ -77,7 +77,7 @@ perfect uniformity is essentially impossible to achieve.
 
 Each server operator might seek
 to ensure that it uses the minimum possible
-number of configurations to maximize the effective gprivacy.
+number of configurations to maximize the effective privacy.
 However, this can be at odds with operational constraints
 that might push toward having more diverse configurations.
 
@@ -97,38 +97,69 @@ In practice,
 caching of HTTPS records {{?RFC9460}}
 will ensure that the same public name
 is likely to be used by some number of clients.
+A client cannot be sure that a configuration
+is not available to others,
+unless it is provided directly
+through a mechanism like a ECH Retry,
+as defined in {{Section 6.1.6 of ECH}}.
 
 Any reuse of a name will cluster clients
 into relatively small anonymity sets.
 Any clustering will be based on attributes
 that already leak to a passive observer.
-This includes the time, the network that a client uses,
+This includes
+the time,
+the network that a client uses,
 or the choice of DNS resolver.
 
 The net effect is that the public name
 is either unique (used for a single connection)
 or forms a small anonymity set (used for a small number of connections).
 Assembling observed connection attempts
-into group that represents the true anonymity set
+into groups that represent the true anonymity set
 requires that an adversary obtain mappings for all of the public names
 that correspond to the same hidden names.
+If public name is a sufficient-strong encryption
+of the hidden name,
+an adversary either needs to receive that mapping
+or they are only able to use inference
+(such as website fingerprinting).
 
-The net effect is similar to publishing
-multiple different encryptions of public names.
-This increased diversity of public names
-leads to a much larger effective anonymity set,
-except to the extent that adversaries are able to
-recover the mapping of each public name to hidden names.
+An increased diversity of public names
+leads to a much larger effective anonymity set.
+An adversary that is ignorant of mappings
+for each public name
+effectively observes a single anonymity set
+that corresponds to every name that it does not know.
 Both the public name and other ECH configuration values,
 such as HPKE {{?RFC9180}} parameters,
 are obscured.
 
+
+## Limitations
+
+Though diversity in public names
+could create a larger anonymity set for hidden names,
+that could be partitioned
+by information that leaks as part of connection establishment and use.
+In particular, server IP addresses are not hidden
+and can be used to distinguish services.
+Website fingerprinting {{?WFP=I-D.irtf-pearg-website-fingerprinting}}
+might also be used to recover the identity of hidden sites.
+
+This protection is limited
+to those public names for which an adversary
+is unable to recover the mapping to the corresponding hidden names.
+As mappings could be retained in shared caches
+at DNS resolvers,
+this creates a significant risk;
+see {{unique-mapping}} for details.
+
 The use of multiple public names
 can undermine the effectiveness of ECH
-if poorly implemented;
+if incautiously implemented.
 {{deployment}} includes a discussion of these considerations.
-This approach also cannot hide the use of IP addresses
-that correspond to a set of hidden names.
+
 
 
 ## Alternative Authentication for Public Names
