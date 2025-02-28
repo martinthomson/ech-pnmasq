@@ -13,22 +13,22 @@ retry configurations is described.
 This method enables the use of multiple
 public names for the same server anonymity set. 
     " name="description">
-<meta content="xml2rfc 3.24.0" name="generator">
+<meta content="xml2rfc 3.27.0" name="generator">
 <meta content="next generation" name="keyword">
 <meta content="unicorn" name="keyword">
 <meta content="sparkling distributed ledger" name="keyword">
 <meta content="draft-thomson-tls-ech-pnmasq-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.24.0
-    Python 3.12.7
+  xml2rfc 3.27.0
+    Python 3.12.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.4
+    Jinja2 3.1.5
     lxml 5.3.0
     platformdirs 4.3.6
-    pycountry 22.3.5
-    PyYAML 6.0.1
+    pycountry 24.6.1
+    PyYAML 6.0.2
     requests 2.32.3
     setuptools 70.3.0
     wcwidth 0.2.13
@@ -441,7 +441,7 @@ dl {
     margin-bottom: 0;
   }
 }
-dl > dt {
+dl:not(.dlNewline) > dt {
   float: left;
   margin-right: 2ch;
   min-width: 8ch;
@@ -540,7 +540,11 @@ figcaption, caption {
   }
   pre, svg {
     display: inline-block;
-    overflow-x: auto;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
   }
   pre {
     max-width: 100%;
@@ -1046,11 +1050,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Public Name Masquerade</td>
-<td class="right">November 2024</td>
+<td class="right">February 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Thomson</td>
-<td class="center">Expires 24 May 2025</td>
+<td class="center">Expires 1 September 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1067,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-thomson-tls-ech-pnmasq-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-11-20" class="published">20 November 2024</time>
+<time datetime="2025-02-28" class="published">28 February 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-05-24">24 May 2025</time></dd>
+<dd class="expires"><time datetime="2025-09-01">1 September 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1122,7 +1126,7 @@ public names for the same server anonymity set.<a href="#section-abstract-1" cla
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 24 May 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1131,7 +1135,7 @@ public names for the same server anonymity set.<a href="#section-abstract-1" cla
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2024 IETF Trust and the persons identified as the
+            Copyright (c) 2025 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1152,13 +1156,16 @@ public names for the same server anonymity set.<a href="#section-abstract-1" cla
         </h2>
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
                 <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-unique-public-names" class="internal xref">Unique Public Names</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
-                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-alternative-authentication-" class="internal xref">Alternative Authentication for Public Names</a></p>
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-limitations" class="internal xref">Limitations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
+                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-alternative-authentication-" class="internal xref">Alternative Authentication for Public Names</a></p>
 </li>
             </ul>
 </li>
@@ -1286,7 +1293,7 @@ other configuration parameters,
 perfect uniformity is essentially impossible to achieve.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">Each server operator might seek
 to ensure that it uses the minimum possible
-number of configurations to maximize the effective gprivacy.
+number of configurations to maximize the effective privacy.
 However, this can be at odds with operational constraints
 that might push toward having more diverse configurations.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <div id="unique-public-names">
@@ -1305,50 +1312,82 @@ a unique public name is used for each client.
 In practice,
 caching of HTTPS records <span>[<a href="#RFC9460" class="cite xref">RFC9460</a>]</span>
 will ensure that the same public name
-is likely to be used by some number of clients.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+is likely to be used by some number of clients.
+A client cannot be sure that a configuration
+is not available to others,
+unless it is provided directly
+through a mechanism like a ECH Retry,
+as defined in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-23#section-6.1.6" class="relref">Section 6.1.6</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3">Any reuse of a name will cluster clients
 into relatively small anonymity sets.
 Any clustering will be based on attributes
 that already leak to a passive observer.
-This includes the time, the network that a client uses,
+This includes
+the time,
+the network that a client uses,
 or the choice of DNS resolver.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.1-4">The net effect is that the public name
 is either unique (used for a single connection)
 or forms a small anonymity set (used for a small number of connections).
 Assembling observed connection attempts
-into group that represents the true anonymity set
+into groups that represent the true anonymity set
 requires that an adversary obtain mappings for all of the public names
-that correspond to the same hidden names.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.1-5">The net effect is similar to publishing
-multiple different encryptions of public names.
-This increased diversity of public names
-leads to a much larger effective anonymity set,
-except to the extent that adversaries are able to
-recover the mapping of each public name to hidden names.
+that correspond to the same hidden names.
+If public name is a sufficient-strong encryption
+of the hidden name,
+an adversary either needs to receive that mapping
+or they are only able to use inference
+(such as website fingerprinting).<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-5">An increased diversity of public names
+leads to a much larger effective anonymity set.
+An adversary that is ignorant of mappings
+for each public name
+effectively observes a single anonymity set
+that corresponds to every name that it does not know.
 Both the public name and other ECH configuration values,
 such as HPKE <span>[<a href="#RFC9180" class="cite xref">RFC9180</a>]</span> parameters,
 are obscured.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
-<p id="section-1.1-6">The use of multiple public names
+</section>
+</div>
+<div id="limitations">
+<section id="section-1.2">
+        <h3 id="name-limitations">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-limitations" class="section-name selfRef">Limitations</a>
+        </h3>
+<p id="section-1.2-1">Though diversity in public names
+could create a larger anonymity set for hidden names,
+that could be partitioned
+by information that leaks as part of connection establishment and use.
+In particular, server IP addresses are not hidden
+and can be used to distinguish services.
+Website fingerprinting <span>[<a href="#WFP" class="cite xref">WFP</a>]</span>
+might also be used to recover the identity of hidden sites.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">This protection is limited
+to those public names for which an adversary
+is unable to recover the mapping to the corresponding hidden names.
+As mappings could be retained in shared caches
+at DNS resolvers,
+this creates a significant risk;
+see <a href="#unique-mapping" class="auto internal xref">Section 6.2</a> for details.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-3">The use of multiple public names
 can undermine the effectiveness of ECH
-if poorly implemented;
-<a href="#deployment" class="auto internal xref">Section 6</a> includes a discussion of these considerations.
-This approach also cannot hide the use of IP addresses
-that correspond to a set of hidden names.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
+if incautiously implemented.
+<a href="#deployment" class="auto internal xref">Section 6</a> includes a discussion of these considerations.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="alternative-authentication-for-public-names">
-<section id="section-1.2">
+<section id="section-1.3">
         <h3 id="name-alternative-authentication-">
-<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-alternative-authentication-" class="section-name selfRef">Alternative Authentication for Public Names</a>
+<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-alternative-authentication-" class="section-name selfRef">Alternative Authentication for Public Names</a>
         </h3>
-<p id="section-1.2-1">This document defines a new method
+<p id="section-1.3-1">This document defines a new method
 for validating the certificate that a server proffers
 during an ECH retry.
 This enables a retry process that does not
 depend on the public key infrastructure
 that is used for server authentication,
-making it far easier to create new public names.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2">These names can even overlap with
+making it far easier to create new public names.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-2">These names can even overlap with
 parts of the domain name system.
 The client determines
 whether a server is authorized to provide
@@ -1356,13 +1395,13 @@ an ECH retry configuration
 based on the choice of name alone.
 This removes any need to rely on anything other than
 the public key that is bound to the name.
-This obviates any need for revocation checks,<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<p id="section-1.2-3">This change to public name authentication
+This obviates any need for revocation checks,<a href="#section-1.3-2" class="pilcrow">¶</a></p>
+<p id="section-1.3-3">This change to public name authentication
 is the only aspect of this document that requires
 client changes.
 This document describes a server architecture
 that helps demonstrate the feasibility of this approach,
-including an analysis of drawbacks; see <a href="#authn" class="auto internal xref">Section 3</a>.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+including an analysis of drawbacks; see <a href="#authn" class="auto internal xref">Section 3</a>.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1402,7 +1441,7 @@ comes from the ECH configuration.
 The ECH configuration is typically obtained
 from the SVCB record <span>[<a href="#SVCB" class="cite xref">SVCB</a>]</span>,
 which ECH treats as unauthenticated;
-see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#section-10.2" class="relref">Section 10.2</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="#section-3-3" class="pilcrow">¶</a></p>
+see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-23#section-10.2" class="relref">Section 10.2</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">The client therefore relies on the ECH configuration
 to choose the public name that it authenticates.
 This opens the possibility that the ECH configuration
@@ -1496,7 +1535,7 @@ Otherwise, the connection attempt <span class="bcp14">MUST</span> be aborted
 and any retry configuration that is provided
 is discarded.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">This procedure largely replaces the procedure
-in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#section-6.1.7" class="relref">Section 6.1.7</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.
+in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-23#section-6.1.7" class="relref">Section 6.1.7</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.
 This does not change the requirement that
 the client not
 provide a certificate if requested
@@ -1920,12 +1959,12 @@ authn_public_key = pk(authn_secret)
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
 <p id="section-8-1">Use of this mechanism inherits
-many of the security considerations from <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#section-10" class="relref">Section 10</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.
+many of the security considerations from <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-23#section-10" class="relref">Section 10</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.
 Depending on how it is deployed,
 it can alter the privacy characteristics,
 as it obscures the extent of an anonymity set
 presented by a client-facing server;
-see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#section-10.1" class="relref">Section 10.1</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="#section-8-1" class="pilcrow">¶</a></p>
+see <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-23#section-10.1" class="relref">Section 10.1</a> of [<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <div id="recovery-of-anonymity-sets">
 <section id="section-8.1">
         <h3 id="name-recovery-of-anonymity-sets">
@@ -2104,7 +2143,7 @@ established by <span>[<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="
 <dl class="references">
 <dt id="ECH">[ECH]</dt>
         <dd>
-<span class="refAuthor">Rescorla, E.</span>, <span class="refAuthor">Oku, K.</span>, <span class="refAuthor">Sullivan, N.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"TLS Encrypted Client Hello"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-tls-esni-22</span>, <time datetime="2024-09-15" class="refDate">15 September 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22">https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22</a>&gt;</span>. </dd>
+<span class="refAuthor">Rescorla, E.</span>, <span class="refAuthor">Oku, K.</span>, <span class="refAuthor">Sullivan, N.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"TLS Encrypted Client Hello"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-tls-esni-23</span>, <time datetime="2025-02-19" class="refDate">19 February 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-23">https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-23</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -2148,8 +2187,12 @@ established by <span>[<a href="#ECH" class="cite xref">ECH</a>]</span>.<a href="
 <span class="refAuthor">Schwartz, B.</span>, <span class="refAuthor">Bishop, M.</span>, and <span class="refAuthor">E. Nygren</span>, <span class="refTitle">"Service Binding and Parameter Specification via the DNS (SVCB and HTTPS Resource Records)"</span>, <span class="seriesInfo">RFC 9460</span>, <span class="seriesInfo">DOI 10.17487/RFC9460</span>, <time datetime="2023-11" class="refDate">November 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9460">https://www.rfc-editor.org/rfc/rfc9460</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SVCB">[SVCB]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Schwartz, B.</span>, <span class="refAuthor">Bishop, M.</span>, and <span class="refAuthor">E. Nygren</span>, <span class="refTitle">"Service Binding and Parameter Specification via the DNS (SVCB and HTTPS Resource Records)"</span>, <span class="seriesInfo">RFC 9460</span>, <span class="seriesInfo">DOI 10.17487/RFC9460</span>, <time datetime="2023-11" class="refDate">November 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9460">https://www.rfc-editor.org/rfc/rfc9460</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="WFP">[WFP]</dt>
+      <dd>
+<span class="refAuthor">Goldberg, I.</span>, <span class="refAuthor">Wang, T.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Network-Based Website Fingerprinting"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-pearg-website-fingerprinting-01</span>, <time datetime="2020-09-08" class="refDate">8 September 2020</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-pearg-website-fingerprinting-01">https://datatracker.ietf.org/doc/html/draft-irtf-pearg-website-fingerprinting-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
