@@ -92,7 +92,7 @@ creating an anonymity set consisting of all names from all
 servers---effectively rendering every connection
 indistinguishable to an adversary from every other connection.
 This would mean sharing a single consistent ECH configuration
-{{https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#name-encrypted-clienthello-confi}}
+({{Section 4 of ECH}})
 across all clients or, alternatively, across all providers and
 servers.
 
