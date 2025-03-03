@@ -56,7 +56,7 @@ attempts to use an outdated or incorrect configuration. The retry
 requires that the server can authenticate its identity to the
 client. This recovery is an essential feature of ECH, but it can
 contribute to a reduction in the size of the anonymity set of
-server identities. 
+server identities.
 
 ## Privacy in ECH
 In a TLS Encrypted Client Hello (ECH) {{?ECH=I-D.ietf-tls-esni}},
@@ -66,7 +66,7 @@ encrypted in the `ClientHelloInner` relative to the name(s) in
 the `ClientHelloOuter`. This means that privacy is defined by the
 'herd' of names, not of users, which contrasts with
 longer-standing schemes for secure or private communication such
-as VPNs, Tor, and oblivious proxies, to name a few. 
+as VPNs, Tor, and oblivious proxies, to name a few.
 
 Privacy in ECH is conferred by either or both of the
 `ClientHelloInner` and the `ClientHelloOuter`. For example, 100
@@ -94,7 +94,7 @@ indistinguishable to an adversary from every other connection.
 This would mean sharing a single consistent ECH configuration
 {{https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#name-encrypted-clienthello-confi}}
 across all clients or, alternatively, across all providers and
-servers. 
+servers.
 
 However, a consistent configuration negates any single server's
 ability to authenticate itself on the SNI in the
