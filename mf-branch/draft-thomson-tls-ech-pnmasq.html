@@ -1161,13 +1161,16 @@ public names for the same server anonymity set.<a href="#section-abstract-1" cla
         </h2>
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
-                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-unique-public-names" class="internal xref">Unique Public Names</a></p>
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-privacy-in-ech" class="internal xref">Privacy in ECH</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
-                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-alternative-authentication-" class="internal xref">Alternative Authentication for Public Names</a></p>
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-unique-public-names" class="internal xref">Unique Public Names</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
+                <p id="section-toc.1-1.1.2.3.1" class="keepWithNext"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-alternative-authentication-" class="internal xref">Alternative Authentication for Public Names</a></p>
 </li>
             </ul>
 </li>
@@ -1268,35 +1271,52 @@ public names for the same server anonymity set.<a href="#section-abstract-1" cla
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">In a TLS Encrypted Client Hello (ECH) <span>[<a href="#ECH" class="cite xref">ECH</a>]</span>,
-the level of privacy is directly proportional to the number of
-possible name(s) that could be encrypted in the
-<code>ClientHelloInner</code> relative to the name(s) in the
-<code>ClientHelloOuter</code>.
-[comment]: However, as the anonymity set that results
-[comment]: depends on IP address, public name, and other configuration
-[comment]: parameters, perfect uniformity is essentially impossible to
-[comment]: achieve.
-This means that privacy is defined by the 'herd' of names and not
-of users, in direct contrast to longer-standing schemes for
-secure or private communication such as VPNs, Tor, and oblivious
-proxies, to name a few. For example, say a server can
-authenticate domains <code>example-1.com</code> through <code>example-5.com</code>,
-inclusive, and the server populates its <code>echconfig</code> with
-<code>example-ech.com</code>. In this case, an observer's ability to know
-the contents of the ClientHelloInner is neither advantaged nor
-disadvantaged by the number of users connecting to the
-ClientHelloOuter.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">The natural way to improve privacy in this setting is to maximize
-the uniformity of visible information that is revealed to
-adversaries. An ideal arrangement uses a single consistent ECH
-configuration
+<p id="section-1-1">The TLS Encrypted Client Hello (ECH) <span>[<a href="#ECH" class="cite xref">ECH</a>]</span>
+defines a 'retry' fallback mechanism that is used when a client
+attempts to use an outdated or incorrect configuration. The retry
+requires that the server can authenticate its identity to the
+client. This recovery is an essential feature of ECH, but it can
+contribute to a reduction in the size of the anonymity set of
+server identities.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<div id="privacy-in-ech">
+<section id="section-1.1">
+        <h3 id="name-privacy-in-ech">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-privacy-in-ech" class="section-name selfRef">Privacy in ECH</a>
+        </h3>
+<p id="section-1.1-1">In a TLS Encrypted Client Hello (ECH) <span>[<a href="#ECH" class="cite xref">ECH</a>]</span>,
+the level of privacy is dependent on its deployment. Privacy in
+ECH is proportional to the number of possible names that could be
+encrypted in the <code>ClientHelloInner</code> relative to the name(s) in
+the <code>ClientHelloOuter</code>. This means that privacy is defined by the
+'herd' of names, not of users, which contrasts with
+longer-standing schemes for secure or private communication such
+as VPNs, Tor, and oblivious proxies, to name a few.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">Privacy in ECH is conferred by either or both of the
+<code>ClientHelloInner</code> and the <code>ClientHelloOuter</code>. For example, 100
+names that share the same ECH configuration establish an
+anonymity set of 100, irrespective of the number of users, i.e.,
+an observer's ability to know the contents of the
+ClientHelloInner is neither advantaged nor disadvantaged by the
+number of users connecting to the ClientHelloOuter. However, this
+setup is dependent on the operator, and confers no additional
+privacy to one-server one-name deployments.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">Alternatively, an ECH deployment may vary the number of names in
+the <code>ClientHelloOuter</code>. If the set size is finite consisting of
+public names, then every query for the HTTPS RR may be populated
+with any of the names selected at random. In this setup an
+adversary must engage in a "Coupon Collector" exercise to identify
+all names in the set. Names could also be randomized, which would
+force every server to decrypt all connections, including for
+names it knows it does not own.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+<p id="section-1.1-4">A natural way to improve privacy maximizes the 'herd' quality by
+creating an anonymity set consisting of all names from all
+servers---effectively rendering every connection
+indistinguishable to an adversary from every other connection.
+This would mean sharing a single consistent ECH configuration
 <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#name-encrypted-clienthello-confi">https://datatracker.ietf.org/doc/html/draft-ietf-tls-esni-22#name-encrypted-clienthello-confi</a></span>
-across
-[comment]: all clients or, alternatively, across
-all providers and servers. A single configuration creates an
-anonymity set consisting of all names from all servers.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">However, a consistent configuration negates any single server's
+across all clients or, alternatively, across all providers and
+servers.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-5">However, a consistent configuration negates any single server's
 ability to authenticate itself on the SNI in the
 ClientHelloOuter. Authentication against a public name is needed
 so the server can safely invoke a retry mechanism, for example,
@@ -1305,54 +1325,43 @@ configuration. This recovery is an essential feature of ECH that
 also ensures a server attempts to decrypt only those ECH
 connections it expects, for example, so that a server for
 example.com does not attempt to decrypt ECH connections for
-not-example.com.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">However, the need to authenticate a public name also limits the size of
+not-example.com.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
+<p id="section-1.1-6">The need to authenticate a public name also limits the size of
 the anonymity set to the number of names available at the server,
-thereby upper-bounding ECH privacy to its server's deployment.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5"><strong>MF PICK UP FROM HERE</strong><a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">A reduction occurs when a service needs to use
-the different public name values.
-The public name is chosen for the server deployment
-that clients put in the unprotected "server_name" extension.
-A server deployment might rely on the public name
-to route incoming connections
-or select from different ECH configurations.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">Each server operator might seek
-to ensure that it uses the minimum possible
-number of configurations to maximize the effective privacy.
-However, this can be at odds with operational constraints
-that might push toward having more diverse configurations.<a href="#section-1-7" class="pilcrow">¶</a></p>
+thereby upper-bounding ECH privacy to its server's deployment.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
+</section>
+</div>
 <div id="unique-public-names">
-<section id="section-1.1">
+<section id="section-1.2">
         <h3 id="name-unique-public-names">
-<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-unique-public-names" class="section-name selfRef">Unique Public Names</a>
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-unique-public-names" class="section-name selfRef">Unique Public Names</a>
         </h3>
-<p id="section-1.1-1">This document describes an approach that seeks
+<p id="section-1.2-1">This document describes an approach that seeks
 to improve privacy by increasing the number of public names.
 Rather than having as few public names as possible,
 it increases the size of the anonymity set
 for public names
-by using as many public names as possible.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.1-2">In the ideal form of this approach,
+by using as many public names as possible.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">In the ideal form of this approach,
 a unique public name is used for each client.
 In practice,
 caching of HTTPS records <span>[<a href="#RFC9460" class="cite xref">RFC9460</a>]</span>
 will ensure that the same public name
-is likely to be used by some number of clients.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
-<p id="section-1.1-3">Any reuse of a name will cluster clients
+is likely to be used by some number of clients.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-3">Any reuse of a name will cluster clients
 into relatively small anonymity sets.
 Any clustering will be based on attributes
 that already leak to a passive observer.
 This includes the time, the network that a client uses,
-or the choice of DNS resolver.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
-<p id="section-1.1-4">The net effect is that the public name
+or the choice of DNS resolver.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4">The net effect is that the public name
 is either unique (used for a single connection)
 or forms a small anonymity set (used for a small number of connections).
 Assembling observed connection attempts
 into group that represents the true anonymity set
 requires that an adversary obtain mappings for all of the public names
-that correspond to the same hidden names.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.1-5">The net effect is similar to publishing
+that correspond to the same hidden names.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">The net effect is similar to publishing
 multiple different encryptions of public names.
 This increased diversity of public names
 leads to a much larger effective anonymity set,
@@ -1360,28 +1369,28 @@ except to the extent that adversaries are able to
 recover the mapping of each public name to hidden names.
 Both the public name and other ECH configuration values,
 such as HPKE <span>[<a href="#RFC9180" class="cite xref">RFC9180</a>]</span> parameters,
-are obscured.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
-<p id="section-1.1-6">The use of multiple public names
+are obscured.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<p id="section-1.2-6">The use of multiple public names
 can undermine the effectiveness of ECH
 if poorly implemented;
 <a href="#deployment" class="auto internal xref">Section 6</a> includes a discussion of these considerations.
 This approach also cannot hide the use of IP addresses
-that correspond to a set of hidden names.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
+that correspond to a set of hidden names.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="alternative-authentication-for-public-names">
-<section id="section-1.2">
+<section id="section-1.3">
         <h3 id="name-alternative-authentication-">
-<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-alternative-authentication-" class="section-name selfRef">Alternative Authentication for Public Names</a>
+<a href="#section-1.3" class="section-number selfRef">1.3. </a><a href="#name-alternative-authentication-" class="section-name selfRef">Alternative Authentication for Public Names</a>
         </h3>
-<p id="section-1.2-1">This document defines a new method
+<p id="section-1.3-1">This document defines a new method
 for validating the certificate that a server proffers
 during an ECH retry.
 This enables a retry process that does not
 depend on the public key infrastructure
 that is used for server authentication,
-making it far easier to create new public names.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
-<p id="section-1.2-2">These names can even overlap with
+making it far easier to create new public names.<a href="#section-1.3-1" class="pilcrow">¶</a></p>
+<p id="section-1.3-2">These names can even overlap with
 parts of the domain name system.
 The client determines
 whether a server is authorized to provide
@@ -1389,13 +1398,13 @@ an ECH retry configuration
 based on the choice of name alone.
 This removes any need to rely on anything other than
 the public key that is bound to the name.
-This obviates any need for revocation checks,<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<p id="section-1.2-3">This change to public name authentication
+This obviates any need for revocation checks,<a href="#section-1.3-2" class="pilcrow">¶</a></p>
+<p id="section-1.3-3">This change to public name authentication
 is the only aspect of this document that requires
 client changes.
 This document describes a server architecture
 that helps demonstrate the feasibility of this approach,
-including an analysis of drawbacks; see <a href="#authn" class="auto internal xref">Section 3</a>.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+including an analysis of drawbacks; see <a href="#authn" class="auto internal xref">Section 3</a>.<a href="#section-1.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
