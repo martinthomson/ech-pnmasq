@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-02T01:46:18.152520+00:00",
+  "timestamp": "2025-03-04T01:42:57.860391+00:00",
   "repo": "martinthomson/ech-pnmasq",
   "labels": [
     {
@@ -135,7 +135,73 @@
           "updatedAt": "2024-11-20T03:54:27Z"
         }
       ]
+    },
+    {
+      "number": 4,
+      "id": "I_kwDONPOULc6sPITP",
+      "title": "Explore DNS shared caching countermeasures",
+      "url": "https://github.com/martinthomson/ech-pnmasq/issues/4",
+      "state": "OPEN",
+      "author": "martinthomson",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "In particular, the idea that clients might generate a random nonce for queries that can be fed into the algorithm for generating the public name.  The idea here is twofold:\n\n* Provide a key that is unique (or nearly unique) for a given client.  Other clients need to then guess the nonce in order to get the same information.\n* Separate caches at resolvers.\n\nThe current design uses IP address in this way, but that leads to some fragility (NATs with shifting bindings, maybe tunnels).  An explicit nonce requires protocol changes. but would allow for finer tuning (caches could truncate values to match what they are willing to cache, servers could use as much as they see fit).  In many ways, the client subnet extension is a good model, it's just that this might need to be something distinct from something used in packet routing.",
+      "createdAt": "2025-03-02T16:27:34Z",
+      "updatedAt": "2025-03-02T16:27:34Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 5,
+      "id": "PR_kwDONPOULc6NIU2Y",
+      "title": "MF branch -- intro changes",
+      "url": "https://github.com/martinthomson/ech-pnmasq/pull/5",
+      "state": "MERGED",
+      "author": "marwanfayed",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Changes to intro and motivation.",
+      "createdAt": "2025-03-03T10:32:30Z",
+      "updatedAt": "2025-03-03T22:05:13Z",
+      "baseRepository": "martinthomson/ech-pnmasq",
+      "baseRefName": "main",
+      "baseRefOid": "18ad80ef363e16cf75e26ff5783cdf22bf617108",
+      "headRepository": "martinthomson/ech-pnmasq",
+      "headRefName": "mf-branch",
+      "headRefOid": "eeb0cd2671f644aceb72c7960c8212b5115851d4",
+      "closedAt": "2025-03-03T22:05:13Z",
+      "mergedAt": "2025-03-03T22:05:13Z",
+      "mergedBy": "martinthomson",
+      "mergeCommit": {
+        "oid": "3143ac29f5af564f38b2a0b0908911abb69d5ce0"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDONPOULc6eRxis",
+          "commit": {
+            "abbreviatedOid": "0467316"
+          },
+          "author": "martinthomson",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-03-03T22:03:54Z",
+          "updatedAt": "2025-03-03T22:04:56Z",
+          "comments": [
+            {
+              "originalPosition": 91,
+              "body": "```suggestion\r\n({{Section 4 of ECH}})\r\n```",
+              "createdAt": "2025-03-03T22:03:54Z",
+              "updatedAt": "2025-03-03T22:04:56Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
